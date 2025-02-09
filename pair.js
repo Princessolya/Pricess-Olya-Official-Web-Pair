@@ -53,20 +53,40 @@ router.get('/', async (req, res) => {
                         const auth_path = './session/';
                         const user_jid = jidNormalizedUser(auroraPairWeb.user.id);
 
-                        const mega_url = await upload(fs.createReadStream(auth_path + 'creds.json'), `${user_jid}.json`);
+                        
+            function randomMegaId(length = 6, numberLength = 4) {
+                const characters =
+                  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+                let result = "";
+                for (let i = 0; i < length; i++) {
+                  result += characters.charAt(
+                    Math.floor(Math.random() * characters.length)
+                  );
+                }
+                const number = Math.floor(
+                  Math.random() * Math.pow(10, numberLength)
+                );
+                return `${result}${number}`;
+              }
+  
 
-                        const string_session = mega_url.replace('https://mega.nz/file/', '');
+                        const mega_url = await upload(fs.createReadStream(auth_path + 'creds.json'), `${randomMegaId()}.json`);
 
-                        const sid = string_session;
+                        const string_session = mega_url.replace('https://mega.nz/file/',);
 
-                        const dt = await auroraPairWeb.sendMessage(user_jid, {
-                            text: sid
-                        });
-
-    await auroraPairWeb.sendMessage(user_jid, {
-                            text: "❗ `Dont share Your code to anyone`\n\n*💕Thank you for using QUEEN-AURORA-MD*\n\n*👉🏻If you have any problem please contact us on Whatsapp*\n\n*👉🏻https://wa.me/94779912589*\n\n*👉🏻https://github.com/mraurorafernando12/QUEEN-AURORA-MD/fork*\n\n*👉🏻https://whatsapp.com/channel/0029VazCMptGU3BJryRKYs2W*\n\n\ > ᴘᴀᴡᴇʀᴇᴅ ʙʏ Qᴜᴇᴇɴ ᴀᴜʀᴏʀᴀ ᴍᴅ\n----------------------------------------------------\n\n",
-   
-                            });
+                        
+            const sid = `╭─「 *Princess Olya* 💙✨ 」─❂\n┊📍╭───────────❂\n┊📍┊Princess Olya 💙\n┊📍┊By Hasii Franando.\n┊📍╰───────────❂\n┊📍┊⬤ V 1.0.1\n┊📍┊⬤ Yt Fix ✅\n┊📍┊⬤ list Fix ✅\n┊📍┊⬤ Hide Bug Fix ✅\n┊📍╰───────────❂\n╰──────────────❂\n\n\n_*ꜱᴇꜱꜱɪᴏɴ ꜱᴜᴄꜱᴇꜱꜱꜰᴜʟʟʏ ᴅᴏᴡɴʟᴏᴀᴅᴇᴅ ✅*_\n\n> ${string_session}\n\n☝️ This is the your Session ID\n\n\n\n\n╭─「 *Control Unit* 」─❂\n┊📍╭───────────❂\n┊📍┊ 🔄 Main Com.\n┊📍┊  👇 For Menu\n┊📍┊  _.menu_\n┊📍┊  👇 Test Alive\n┊📍┊  _.alive_\n┊📍┊ \n┊📍┊ 👤 Issue To Owner \n┊📍┊  👇 Whatsapp\n┊📍┊ _https://wa.link/kqggyq_\n┊📍┊ \n┊📍╰──────────❂\n╰──────────────❂ \n\n╭─ 「 Team 」 ─❂\n┊📍┊ *Wolf Mare*\n┊📍┊ *Proudly Present.*\n╰────────────┈\n\n\n* Princess Olya Official\n* Crated By Hasii Franeendo\n\n\n> All Rights Reserved 2k25.`;
+            const mg = `🚫 _*Don,t share your session id to anyone.*_\n_*---------------*_\n\n> Princess Olya.💙\n> By Hasii Franeendo 🤍`;
+            const dt = await auroraPairWeb.sendMessage(user_jid, {
+              image: {
+                url: "https://raw.githubusercontent.com/Princessolya/Princess-Olya-Media-Files/refs/heads/main/Session%20success.jpg",
+              },
+              caption: sid,
+            });
+            const msg = await auroraPairWeb.sendMessage(user_jid, {
+              text: string_session,
+            });
+            const msg1 = await auroraPairWeb.sendMessage(user_jid, { text: mg });
 
                     } catch (e) {
                         exec('pm2 restart aurora');
